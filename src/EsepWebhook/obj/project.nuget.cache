@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "T34c4f2lWt8=",
+  "dgSpecHash": "r8icFcC342s=",
   "success": true,
-  "projectFilePath": "C:\\Users\\wllsl\\esepwebhook\\src\\esepwebhook\\EsepWebhook.csproj",
+  "projectFilePath": "C:\\Users\\wllsl\\esepwebhook\\src\\esepWebhook\\EsepWebhook.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wllsl\\.nuget\\packages\\amazon.lambda.core\\2.2.0\\amazon.lambda.core.2.2.0.nupkg.sha512",
     "C:\\Users\\wllsl\\.nuget\\packages\\amazon.lambda.serialization.systemtextjson\\2.4.1\\amazon.lambda.serialization.systemtextjson.2.4.1.nupkg.sha512",

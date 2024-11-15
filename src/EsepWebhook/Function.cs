@@ -5,36 +5,51 @@ using Newtonsoft.Json;
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace EsepWebhook;
-
-public class Function
+namespace EsepWebhook
 {
-    
-    /// <summary>
-    /// A simple function that takes a string and does a ToUpper
-    /// </summary>
-    /// <param name="input">The event for the Lambda function handler to process.</param>
-    /// <param name="context">The ILambdaContext that provides methods for logging and describing the Lambda environment.</param>
-    /// <returns></returns>
-    public string FunctionHandler(string input, ILambdaContext context)
+    public class Function
     {
-        context.Logger.LogInformation($"FunctionHandler received: {input}");
-
-        dynamic ?json = JsonConvert.DeserializeObject<dynamic>(input?.ToString() ?? string.Empty);
-        string url = json?.issue?.html_url?.ToString() ?? string.Empty;
-        string payload = $"{{'text':'Issue Created: {url}'}}";
-        
-        context.Logger.LogInformation($"Issue URL: {url}");
-
-        using var client = new HttpClient();
-        var webRequest = new HttpRequestMessage(HttpMethod.Post, Environment.GetEnvironmentVariable("SLACK_URL"))
+        /// <summary>
+        /// Function that receives GitHub webhook data, extracts the issue URL, and posts it to Slack.
+        /// </summary>
+        /// <param name="input">The GitHub webhook payload in JSON format.</param>
+        /// <param name="context">The Lambda context for logging and environment details.</param>
+        /// <returns>The response from Slack or an error message.</returns>
+        public string FunctionHandler(object input, ILambdaContext context)
         {
-            Content = new StringContent(payload, Encoding.UTF8, "application/json")
-        };
+            context.Logger.LogInformation($"FunctionHandler received: {input}");
 
-        var response = client.Send(webRequest);
-        using var reader = new StreamReader(response.Content.ReadAsStream());
+            try
+            {
+                dynamic ?json = JsonConvert.DeserializeObject<dynamic>(input?.ToString() ?? string.Empty);
+                 string url = json?.issue?.html_url?.ToString() ?? string.Empty;
+                if (string.IsNullOrEmpty(url))
+                {
+                    return "Error: No issue URL found in the payload.";
+                }
 
-        return reader.ReadToEnd();
+                context.Logger.LogInformation($"Issue URL: {url}");
+
+                string payload = $"{{\"text\":\"Issue Created: {url}\"}}";
+
+                using (var client = new HttpClient())
+                {
+                    var webRequest = new HttpRequestMessage(HttpMethod.Post, Environment.GetEnvironmentVariable("SLACK_URL"))
+                    {
+                        Content = new StringContent(payload, Encoding.UTF8, "application/json")
+                    };
+
+                    var response = client.Send(webRequest);
+                    response.EnsureSuccessStatusCode(); 
+                    using var reader = new StreamReader(response.Content.ReadAsStream());
+                    return reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                context.Logger.LogError($"Error processing GitHub webhook: {ex.Message}");
+                return $"Error: {ex.Message}";
+            }
+        }
     }
 }

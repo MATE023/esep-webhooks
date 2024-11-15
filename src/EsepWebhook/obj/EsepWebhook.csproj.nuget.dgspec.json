@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wllsl\\esepwebhook\\src\\esepwebhook\\EsepWebhook.csproj": {}
+    "C:\\Users\\wllsl\\esepwebhook\\src\\esepWebhook\\EsepWebhook.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wllsl\\esepwebhook\\src\\esepwebhook\\EsepWebhook.csproj": {
+    "C:\\Users\\wllsl\\esepwebhook\\src\\esepWebhook\\EsepWebhook.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wllsl\\esepwebhook\\src\\esepwebhook\\EsepWebhook.csproj",
+        "projectUniqueName": "C:\\Users\\wllsl\\esepwebhook\\src\\esepWebhook\\EsepWebhook.csproj",
         "projectName": "EsepWebhook",
-        "projectPath": "C:\\Users\\wllsl\\esepwebhook\\src\\esepwebhook\\EsepWebhook.csproj",
+        "projectPath": "C:\\Users\\wllsl\\esepwebhook\\src\\esepWebhook\\EsepWebhook.csproj",
         "packagesPath": "C:\\Users\\wllsl\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wllsl\\esepwebhook\\src\\esepwebhook\\obj\\",
+        "outputPath": "C:\\Users\\wllsl\\esepwebhook\\src\\esepWebhook\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
